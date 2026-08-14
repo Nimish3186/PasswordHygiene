@@ -1,6 +1,3 @@
-from tkinter import Scrollbar
-from unittest import result
-
 
 def check_complexity(password):
     has_lower = False
@@ -28,17 +25,32 @@ def check_complexity(password):
             has_symbol = True
 
     score = has_symbol+has_digit+has_lower+has_upper
-
-    if score == 1 :
-        result = ("Weak Password")
-    elif score in [2,3] and length >= 8 :
-        result = ("Moderately strong password")
-    elif score == 4 and length >=11 :
-        result = ("good enough strength")
+    if length < 8:
+        verdict = "Weak Password"
+    elif length < 12:
+        if score <= 1:
+            verdict = "Weak Password"
+        else:
+            verdict = "Moderately strong password"
     else:
-        result = "cases to be added in process"
+        if score <= 1:
+            verdict = "Weak Password"
+        elif score in (2, 3):
+            verdict = "Moderately strong password"
+        else:
+            verdict = "Strong password"
 
-    return result
+    return {
+        "length": length,
+        "has_lower": has_lower,
+        "has_upper": has_upper,
+        "has_digit": has_digit,
+        "has_symbol": has_symbol,
+        "score": score,
+        "verdict": verdict,
+    }
 
-result = check_complexity("Heloo1233#")
-print(result)
+
+if __name__ == '__main__':
+    result = check_complexity("Heloo123")
+    print(result)
