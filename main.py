@@ -61,6 +61,8 @@ def print_report(report):
 
 if __name__ == "__main__":
     user_password = getpass("Please enter the password : ")
+    print(user_password)
+    print("===The Password is printed for demonstration purposes")
 
     complexity_result = complexity.check_complexity(user_password)
     strength_result = strength.analyze_strength(user_password)
