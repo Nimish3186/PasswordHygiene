@@ -12,13 +12,16 @@ venv/
 
 # Generated reports / logs - these are run output, not source
 report.csv
-report.csv.tmp
 report.json
+*.tmp
 *.log
 audit.log
 
-# Test artifacts (test.py cleans these up itself, but ignore just in case
-# cleanup fails - this sandbox has shown transient file-lock issues on
-# newly created files, unrelated to the test logic itself)
+# Per-project hashing salt. MUST NOT be committed: it is what stops the
+# hashes in report.csv from being reversible via public rainbow tables.
+.pwhygiene_salt
+
+# Stray test artifacts (the suite now uses a tempdir, so these should
+# never appear - kept as a backstop).
 test_append_output*
-verify_report.csv
+verify*.csv
