@@ -11,8 +11,16 @@ import complexity
 import hibp
 import strength
 
+DEFAULT_CSV_PATH = "report.csv"
+
+# IST has a fixed +5:30 offset and no DST, so a plain timezone object is
+# accurate (and avoids depending on the system having an IANA tz database,
+# which some Windows setups lack for zoneinfo).
+IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30), "IST")
+
 CSV_HEADERS = [
     "Timestamp",
+    "Password",
     "Verdict",
     "Crack Time",
     "Length",
@@ -64,7 +72,7 @@ def build_report(complexity_result, strength_result, hibp_result):
         verdict = f"zxcvbn score {strength_result['score']}/4"
 
     return {
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "timestamp": datetime.datetime.now(IST).isoformat(),
         "verdict": verdict,
         "crack_time": strength_result["crack_time"],
         "breach_note": breach_note,
@@ -125,18 +133,24 @@ def export_json(report, output_file=None):
         print(json_data)
 
 
-def _report_to_csv_row(report):
+def _format_score(score):
+    """Renders a 0-4 score as 'N/4', or 'N/A' if the score is missing."""
+    return f"{score}/4" if score is not None else "N/A"
+
+
+def _report_to_csv_row(report, password=None):
     """Formats a report dictionary into a row matching CSV_HEADERS."""
     reasons_str = "; ".join(report.get("reasons", []))
     breach_count = report.get("breach", {}).get("count")
     return [
         report.get("timestamp", ""),
+        password if password is not None else "",
         report.get("verdict", ""),
         report.get("crack_time", ""),
         report.get("complexity", {}).get("length", ""),
-        f"{report.get('complexity', {}).get('score', '')}/4",
+        _format_score(report.get("complexity", {}).get("score")),
         report.get("complexity", {}).get("verdict", ""),
-        f"{report.get('strength', {}).get('score', '')}/4",
+        _format_score(report.get("strength", {}).get("score")),
         report.get("breach", {}).get("status", ""),
         breach_count if breach_count is not None else "N/A",
         report.get("breach", {}).get("note", ""),
@@ -144,10 +158,10 @@ def _report_to_csv_row(report):
     ]
 
 
-def export_csv(report, output_file=None):
-    """Appends report to an existing CSV file or creates a new one with headers."""
+def export_csv(report, output_file=None, password=None):
+
     reports = report if isinstance(report, list) else [report]
-    rows = [_report_to_csv_row(r) for r in reports]
+    rows = [_report_to_csv_row(r, password) for r in reports]
 
     if output_file:
         file_exists = os.path.exists(output_file) and os.path.getsize(output_file) > 0
@@ -202,6 +216,12 @@ def main():
 
     report = build_report(complexity_result, strength_result, hibp_result)
 
+    writing_to_default_already = args.output is not None and os.path.abspath(
+        args.output
+    ) == os.path.abspath(DEFAULT_CSV_PATH)
+    if not writing_to_default_already:
+        export_csv(report, DEFAULT_CSV_PATH, password=user_password)
+
     if args.output:
         # Determine format: explicit --format flag or auto-detect from file extension
         fmt = args.format
@@ -209,11 +229,11 @@ def main():
             fmt = "csv" if args.output.lower().endswith(".csv") else "json"
 
         if fmt == "csv":
-            export_csv(report, args.output)
+            export_csv(report, args.output, password=user_password)
         else:
             export_json(report, args.output)
     elif args.csv:
-        export_csv(report)
+        export_csv(report, password=user_password)
     elif args.json:
         export_json(report)
     else:

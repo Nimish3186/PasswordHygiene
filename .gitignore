@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+.venv/
+venv/
+
+# IDE
+.idea/
+
+# Generated reports / logs - these are run output, not source
+report.csv
+report.json
+*.log
+audit.log
+
+# Test artifacts (test.py cleans these up itself, but ignore just in case
+# cleanup fails - this sandbox has shown transient file-lock issues on
+# newly created files, unrelated to the test logic itself)
+test_append_output*
+verify_report.csv

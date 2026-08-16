@@ -25,9 +25,9 @@ Status snapshot as of 2026-08-16.
   - [ ] Timestamp-based filenames, not password-derived
 
 ### Teammates
-- [ ] **Batch/audit mode** — read a file of credentials, loop `main.py`'s logic per line, output a CSV/report of hygiene status per entry
+- [ ] **Batch/audit mode** — read a **file of many credentials** and loop `main.py`'s logic per line. NOT the same as the export below — this still needs to be built (currently `main.py` only checks one password per run, entered via `getpass`).
 - [ ] **Passphrase generator** — suggest a diceware-style passphrase when a password fails, instead of just rejecting it
-- [x] **Structured export (JSON)** — dump `build_report()`'s output as JSON, so batch mode / future dashboard can consume it directly
+- [x] **Structured export (JSON/CSV)** — `main.py` now supports `--json`, `--csv`, and `-o/--output FILE` (auto-appends to an existing file). This is per-run export only — each run still checks **one** password entered interactively; it does not read a credential file. Note: with no flags, `main.py` only prints to the terminal and writes nothing to disk.
 
 ## Not Started / Backlog
 

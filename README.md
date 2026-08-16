@@ -61,6 +61,17 @@ You'll be prompted for a password (input is hidden via `getpass`). The tool
 prints a verdict, breach status, estimated crack time, and a list of
 specific reasons if the password is weak.
 
+**Every run is also archived to `report.csv`** in the project folder,
+including the password in plaintext (a `Password` column). This happens
+automatically regardless of which flags you use. `report.csv` is
+gitignored so it never gets committed, but be aware it accumulates real
+plaintext passwords over time - treat it as sensitive data, store it
+somewhere access-controlled, and delete it when it's no longer needed.
+
+Use `-o FILE` to additionally save to a different file, or `--csv`/`--json`
+to print a structured report to stdout instead of the human-readable
+summary.
+
 Example output:
 
 ```

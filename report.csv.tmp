@@ -1,0 +1,8 @@
+Timestamp,Password,Verdict,Crack Time,Length,Complexity Score,Complexity Verdict,zxcvbn Score,Breach Status,Breach Count,Breach Note,Reasons
+2026-08-16T15:19:22.375120+05:30,,zxcvbn score 4/4,centuries,16,3/4,Moderately strong password,4/4,CLEAN,0,Not found in any known breach.,
+2026-08-16T15:21:05.806975+05:30,,zxcvbn score 4/4,3 years,12,3/4,Moderately strong password,4/4,CLEAN,0,Not found in any known breach.,
+2026-08-16T15:21:18.210695+05:30,,zxcvbn score 4/4,1 year,12,4/4,Strong password,4/4,CLEAN,0,Not found in any known breach.,
+2026-08-16T15:48:58.552788+05:30,TestPass1!,zxcvbn score 2/4 (breach status unknown),42 minutes,10,4/4,Moderately strong password,2/4,UNAVAILABLE,N/A,Breach check unavailable (no network / API error).,Length is only 10 - aim for 12+.; Add another word or two. Uncommon words are better.
+2026-08-16T15:48:58.723640+05:30,AnotherOne2!,zxcvbn score 2/4 (breach status unknown),2 hours,12,4/4,Strong password,2/4,UNAVAILABLE,N/A,Breach check unavailable (no network / API error).,Add another word or two. Uncommon words are better.; Capitalization doesn't help very much.
+2026-08-16T15:50:30.578032+05:30,Nimish@àHNimish@Testing123,zxcvbn score 4/4,centuries,37,4/4,Strong password,4/4,CLEAN,0,Not found in any known breach.,
+2026-08-16T15:51:51.559064+05:30,Nimish@Tesing123,zxcvbn score 4/4,centuries,16,4/4,Strong password,4/4,CLEAN,0,Not found in any known breach.,
