@@ -12,6 +12,7 @@ venv/
 
 # Generated reports / logs - these are run output, not source
 report.csv
+report.csv.tmp
 report.json
 *.log
 audit.log
