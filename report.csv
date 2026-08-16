@@ -2,3 +2,4 @@ Timestamp,Verdict,Crack Time,Length,Complexity Score,Complexity Verdict,zxcvbn S
 2026-08-16T09:49:22.375120+00:00,zxcvbn score 4/4,centuries,16,3/4,Moderately strong password,4/4,CLEAN,0,Not found in any known breach.,
 2026-08-16T09:51:05.806975+00:00,zxcvbn score 4/4,3 years,12,3/4,Moderately strong password,4/4,CLEAN,0,Not found in any known breach.,
 2026-08-16T09:51:18.210695+00:00,zxcvbn score 4/4,1 year,12,4/4,Strong password,4/4,CLEAN,0,Not found in any known breach.,
+2026-08-16T14:43:49.729176+00:00,COMPROMISED,8 hours,11,2/4,Moderately strong password,3/4,COMPROMISED,560,Found in 560 known data breaches.,Length is only 11 - aim for 12+.; Uses too few character types - mix upper/lower/digits/symbols.; Found in 560 known data breaches.
