@@ -3,7 +3,7 @@ import requests
 from getpass import getpass
 
 
-def check_pwned_password(password):
+def check_pwned_password(password, verbose=False):
 
     hash_object = hashlib.sha1(password.encode())
     hash_digest = hash_object.hexdigest().upper()  # 40 char length
@@ -15,24 +15,28 @@ def check_pwned_password(password):
         req = requests.get(url, timeout=5)
 
         if req.status_code != 200:
-            print(f"Error fetching data: {req.status_code}")
+            if verbose:
+                print(f"Error fetching data: {req.status_code}")
             return None
 
         for i in req.text.splitlines():
             splitted = i.split(":")
             if splitted[0] == hashed_suffix:
                 count = int(splitted[1])
-                print(f"Password found! It has been seen {count} times.")
+                if verbose:
+                    print(f"Password found! It has been seen {count} times.")
                 return count
 
-        print("Password not found in any known breach.")
+        if verbose:
+            print("Password not found in any known breach.")
         return 0
 
     except requests.RequestException as e:
-        print(f"Could not reach HIBP: {e}")
+        if verbose:
+            print(f"Could not reach HIBP: {e}")
         return None
 
 
 if __name__ == "__main__":
     user_password = getpass("Please enter the password : ")
-    check_pwned_password(user_password)
+    check_pwned_password(user_password, verbose=True)
